@@ -3,6 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 import openpyxl
 
+with open("image_links.txt", "w") as f:
+    pass
 book_dict = {
     "name": [],
     "price": [],
@@ -73,6 +75,8 @@ for page_no in range(1, pages_count-44):
         book_dict["in_stock"].append(in_stock)
         image_link = "https://books.toscrape.com"+soup.find("img")["src"][5:]
         book_dict["image_link"].append(image_link)
+        with open("image_links.txt", "a") as f:
+            f.write(image_link + "\n")
 df = pd.DataFrame(book_dict)
 df.to_excel("book.xlsx")
 
